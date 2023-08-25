@@ -1,12 +1,15 @@
 from django.shortcuts import render
 from django.db.models import Count
-from shop.models import Product, Category,Flash,Ofer
+from shop.models import Product, Category,Flash,Ofer,Sales
 from cart.models import CartItem, wishlistItem 
 from contact.models import Info
 from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
+from django.db.models import Sum
 
 def product_search_view(request):
+    most_sold_products = Product.objects.annotate(total_sales=Sum('sales__quantity_sold')).order_by('-total_sales')[:10]
+
     info = Info.objects.first()
     cart_items_count = 0
     wishlist_items_count = 0
@@ -42,6 +45,7 @@ def product_search_view(request):
         'categories': Category.objects.annotate(product_count=Count('products')),
         'ofer':ofer,
         'info':info,
+        'most_sold_products':most_sold_products,
         
     }
 

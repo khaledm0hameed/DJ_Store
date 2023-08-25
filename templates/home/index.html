@@ -209,12 +209,12 @@
                         <h2 class="title">Most Sold in eTrade Store</h2>
                     </div>
                     <div class="row row-cols-xl-2 row-cols-1 row--15">
-
-                        <div class="col">
+                        {% for product in most_sold_products %}
+                            <div class="col">
                             <div class="axil-product-list">
                                 <div class="thumbnail">
-                                    <a href="single-product.html">
-                                        <img data-sal="zoom-in" data-sal-delay="100" data-sal-duration="1500" src="{% static 'assets/images/product/electric/product-09.png' %}" alt="Yantiti Leather Bags">
+                                    <a href="{% url 'detail' product.id  %}">
+                                        <img data-sal="zoom-in" data-sal-delay="100" data-sal-duration="1500" style="width:120px; hight:120px;" src="{{product.Image.url}}" alt="Yantiti Leather Bags">
                                     </a>
                                 </div>
                                 <div class="product-content">
@@ -226,21 +226,21 @@
                                     <i class="fas fa-star"></i>
                                     <i class="fal fa-star"></i>
                                 </span>
-                                        <span class="rating-number"><span>100+</span> Reviews</span>
+                                        
                                     </div>
-                                    <h6 class="product-title"><a href="single-product.html">Media Remote</a></h6>
+                                    <h6 class="product-title"><a href="{% url 'detail' product.id  %}">{{product.Name}}</a></h6>
                                     <div class="product-price-variant">
-                                        <span class="price current-price">$29.99</span>
-                                        <span class="price old-price">$49.99</span>
+                                        <span class="price current-price">EG{{product.Price}}</span>
+
                                     </div>
                                     <div class="product-cart">
-                                        <a href="cart.html" class="cart-btn"><i class="fal fa-shopping-cart"></i></a>
-                                        <a href="wishlist.html" class="cart-btn"><i class="fal fa-heart"></i></a>
+                                        <a href="{% url 'add_to_cart' product.id %}" class="cart-btn"><i class="fal fa-shopping-cart"></i></a>
+                                        <a href="{% url 'add_to_wishlist' product.id %}" class="cart-btn"><i class="fal fa-heart"></i></a>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        
+                        {% endfor %}
                     </div>
                 </div>
             </div>
