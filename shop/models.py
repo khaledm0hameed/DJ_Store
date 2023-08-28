@@ -53,9 +53,9 @@ class Product(models.Model):
     Image = models.ImageField(upload_to='images/')
     Availability = models.BooleanField(default=True)
     Color=ColorField(default='#000000')
-    Category=models.ForeignKey(Category, on_delete=models.SET_NULL, related_name="products",null=True)
-    SubCategory=models.ForeignKey(SubCategory, on_delete=models.SET_NULL, related_name="products",null=True)
-    Brand = models.ForeignKey(Brand, on_delete=models.CASCADE, related_name="Brand_Product",null=True)
+    Category=models.ForeignKey(Category, on_delete=models.SET_NULL, related_name="products",null=True,blank=True)
+    SubCategory=models.ForeignKey(SubCategory, on_delete=models.SET_NULL, related_name="products",null=True,blank=True)
+    Brand = models.ForeignKey(Brand, on_delete=models.CASCADE, related_name="Brand_Product",null=True,blank=True)
     Flag = models.CharField(choices=flag, max_length=30, null=True, blank=True)
     Slug = models.SlugField(null=True,blank=True)
     
