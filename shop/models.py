@@ -97,3 +97,5 @@ class Ofer(models.Model):
     product = models.ForeignKey(Product,on_delete=models.SET_NULL,related_name='ofer_product',null=True,blank=True)
     def __str__(self):
         return str(self.product)
+
+#__________________________________________________________________________
