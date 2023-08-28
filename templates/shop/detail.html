@@ -137,7 +137,11 @@
                                                 <div class="comment-body">
                                                     <div class="single-comment">
                                                         <div class="comment-img">
-                                                            <img src="{{review.user.img.url}}" style="width:60px; hight:60px;" alt="Author Images">
+                                                            {% if request.user.image %}
+                                                                <img style="width:70px; hight:70px" src="{{ request.user.image.url }}" alt="User Image">
+                                                            {% else %}
+                                                                <img style="width:70px; hight:70px" src="{% static 'assets/images/defut.png' %}" alt="Default Image">
+                                                            {% endif %}
                                                         </div>
                                                         <div class="comment-inner">
                                                             <h6 class="commenter">

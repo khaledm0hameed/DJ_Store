@@ -131,7 +131,7 @@
                             <div class="col-xl-4 col-sm-6">
                                 <div class="axil-product product-style-one mb--30">
                                     <div class="thumbnail">
-                                        <a href="{% url 'detail' pro.id %}">
+                                        <a href="/{{pro.Slug}}">
                                             <img style="width:200px; hight:200px;" src="{{pro.Image.url}}" alt="Product Images">
                                         </a>
                                         <div class="label-block label-right">
@@ -146,7 +146,7 @@
                                     </div>
                                     <div class="product-content">
                                         <div class="inner">
-                                            <h5 class="title"><a href="{% url 'detail' pro.id %}">{{pro.Name}}</a></h5>
+                                            <h5 class="title"><a href="/{{pro.Slug}}" >{{pro.Name}}</a></h5>
                                             <div class="product-price-variant">
                                                 <span class="price current-price">{{pro.Price}}</span>
                                                 

@@ -11,13 +11,13 @@ from .forms import AddProductForm,AddReviewForm
 # Create your views here.
 
 
-def ShopView(request, category_id=None):
+def ShopView(request, slug=None):
     sort_by = request.GET.get('sort_by', '')  # Get the sorting parameter from the URL query string
     pro = Product.objects.all()
     category = Category.objects.annotate(product_count=Count('products'))
 
-    if category_id:
-        pro = pro.filter(Category_id=category_id)
+    if slug:
+        pro = pro.filter(Slug=slug)
 
     if sort_by == 'price_high':
         pro = pro.order_by('-Price')  # Sorting by price high to low
@@ -27,27 +27,24 @@ def ShopView(request, category_id=None):
     return render(request, 'shop/shop.html', {'pro': pro, 'category': category})
 
 
-
-
-
-def Shop_grid_View(request, category_id=None,sub_id=None):
+def Shop_grid_View(request, category_id=None, sub_id=None):
     sort_by = request.GET.get('sort_by', '')  # Get the sorting parameter from the URL query string
-    pro = Product.objects.all()
-    subCategory = SubCategory.objects.annotate(product_count=Count('products'))
+    products = Product.objects.all()
+    subcategories = SubCategory.objects.annotate(product_count=Count('products'))
+
     if category_id:
-        subCategory = subCategory.filter(category_id=category_id)
-        pro = pro.filter(Category_id=category_id)
+        subcategories = subcategories.filter(Slug=category_id)
+        products = products.filter(
+            SubCategory__Slug=category_id)  # Using SubCategory__Slug to filter by subcategory's slug
     if sub_id:
-        pro = pro.filter(SubCategory = sub_id)
+        products = products.filter(SubCategory=sub_id)
 
     if sort_by == 'price_high':
-        pro = pro.order_by('-Price')  # Sorting by price high to low
+        products = products.order_by('-Price')  # Sorting by price high to low
     elif sort_by == 'price_low':
-        pro = pro.order_by('Price')   # Sorting by price low to high
+        products = products.order_by('Price')  # Sorting by price low to high
 
-    return render(request, 'shop/grid.html', {'pro': pro,'subCategory':subCategory})
-
-
+    return render(request, 'shop/grid.html', {'pro': products, 'subCategory': subcategories})
 
 
 COLOR_MAP = {
@@ -74,14 +71,14 @@ COLOR_MAP = {
 
 
 
-def detail(request, pk):
-    pro = Product.objects.get(id=pk)
+def detail(request, slug):
+    pro = Product.objects.get(Slug=slug)
     
     # Get the subcategory of the current product
     subcategory = pro.SubCategory
     
     # Fetch related products with the same subcategory
-    related = Product.objects.filter(SubCategory=subcategory).exclude(id=pk)
+    related = Product.objects.filter(SubCategory=subcategory).exclude(Slug=slug)
     
     # Fetch images for related products
     related_images = Product_Images.objects.filter(product=pro)
@@ -100,7 +97,7 @@ def detail(request, pk):
             form.user = request.user
             form.save()
             # Redirect back to the detail page after adding the review
-            return redirect('detail', pk=pk)
+            return redirect('detail', slug=slug)
     else:
         form = AddReviewForm()
 

@@ -5,25 +5,37 @@ from django.conf import settings
 import json
 from django.utils import timezone
 from account.models import CustomUser
+from django.utils.text import slugify
 #_________________________________________
 class Category(models.Model):
     image = models.ImageField(upload_to='category/',null=True,blank=True)
     name = models.CharField(max_length=50, null=True)
+    Slug = models.SlugField(null=True,blank=True)
     def __str__(self):
         return self.name
+    def save(self,*args , **kwargs):
+        self.Slug = slugify(self.name)
+        super(Category,self).save(*args , **kwargs)
 #____________________________________________________
 class SubCategory(models.Model):
     name= models.CharField(max_length=50, null=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
-
+    Slug = models.SlugField(null=True,blank=True)
     def __str__(self):
         return self.name
+    def save(self,*args , **kwargs):
+        self.Slug = slugify(self.name)
+        super(SubCategory,self).save(*args , **kwargs)
 #________________________________________________________
 class Brand(models.Model):
     name = models.CharField(max_length=100)
     logo = models.ImageField(upload_to='logo/',null=True)
+    Slug = models.SlugField(null=True,blank=True)
     def __str__(self):
         return self.name
+    def save(self,*args , **kwargs):
+        self.Slug = slugify(self.name)
+        super(Brand,self).save(*args , **kwargs)
 #_____________________________________________________
 flag = [
     ('New', 'New'),
@@ -45,9 +57,14 @@ class Product(models.Model):
     SubCategory=models.ForeignKey(SubCategory, on_delete=models.SET_NULL, related_name="products",null=True)
     Brand = models.ForeignKey(Brand, on_delete=models.CASCADE, related_name="Brand_Product",null=True)
     Flag = models.CharField(choices=flag, max_length=30, null=True, blank=True)
+    Slug = models.SlugField(null=True,blank=True)
     
     def __str__(self):
         return self.Name
+
+    def save(self,*args , **kwargs):
+        self.Slug = slugify(self.Name)
+        super(Product,self).save(*args , **kwargs)
 #________________________________________________________
 class Sales(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)

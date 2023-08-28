@@ -16,7 +16,7 @@
                                     <h1 class="title">{{ofer.product.Name}}</h1>
                                     <div class="slide-action">
                                         <div class="shop-btn">
-                                            <a href="{% url 'detail' ofer.product.id %}" class="axil-btn btn-bg-white"><i class="fal fa-shopping-cart"></i>Shop Now</a>
+                                            <a href="shop/{{ofer.product.Slug}}" class="axil-btn btn-bg-white"><i class="fal fa-shopping-cart"></i>Shop Now</a>
                                         </div>
                                         <div class="item-rating">
                                             <div class="thumb">
@@ -79,7 +79,7 @@
                     {% for cat in categories %}
                     <div class="slick-single-layout">
                         <div class="categrie-product" data-sal="zoom-out" data-sal-delay="200" data-sal-duration="500">
-                            <a href="{% url 'grid_by_category' cat.id %}">
+                            <a href="shop/grid/category/{{cat.Slug}}">
                                 <img class="img-fluid" src="{{cat.image.url}}" alt="product categorie">
                                 <h6 class="cat-title">{{cat.name}}</h6>
                             </a>
@@ -109,7 +109,7 @@
                         <div class="slick-single-layout">
                             <div class="axil-product product-style-two">
                                 <div class="thumbnail">
-                                    <a href="{% url 'detail' pro.id %}">
+                                    <a href="shop/{{pro.Slug}}">
                                         <img data-sal="zoom-out" data-sal-delay="200" data-sal-duration="500" src="{{pro.Image.url}}" alt="Product Images">
                                     </a>
                                     <div class="label-block label-right">
@@ -118,7 +118,7 @@
                                 </div>
                                 <div class="product-content">
                                     <div class="inner">
-                                        <h5 class="title"><a href="{% url 'detail' pro.id %}">{{pro.Name}}</a></h5>
+                                        <h5 class="title"><a href="shop/{{pro.Slug}}">{{pro.Name}}</a></h5>
                                         <div class="product-price-variant">
                                             
                                             <span class="price current-price">{{pro.Price}}</span>
@@ -166,7 +166,7 @@
                         <div class="slick-single-layout">
                             <div class="axil-product product-style-two">
                                 <div class="thumbnail">
-                                    <a href="{% url 'detail' pro.id %}">
+                                    <a href="shop/{{pro.Slug}}">
                                         <img data-sal="zoom-out" data-sal-delay="200" data-sal-duration="500" src="{{pro.Image.url}}" alt="Product Images">
                                     </a>
                                     <div class="label-block label-right">
@@ -175,7 +175,7 @@
                                 </div>
                                 <div class="product-content">
                                     <div class="inner">
-                                        <h5 class="title"><a href="{% url 'detail' pro.id %}">{{pro.Name}}</a></h5>
+                                        <h5 class="title"><a href="shop/{{pro.Slug}}">{{pro.Name}}</a></h5>
                                         <div class="product-price-variant">
                                             
                                             <span class="price current-price">{{pro.Price}}</span>
