@@ -42,7 +42,7 @@
                                 <div class="shop-submenu">
                                     <ul>
                                         {% for cat in subCategory %}
-                                            <li><a href="{% url 'grid_by_subcategory' category_id=cat.category.id sub_id=cat.id %}"> {{cat.name}}</a></li>
+                                           <li><a href="{% url 'grid_by_subcategory' category_id=cat.category.Slug sub_id=cat.Slug %}">{{ cat.name }}</a></li>
                                         {% endfor %}
                                         
                                     </ul>
@@ -131,7 +131,7 @@
                             <div class="col-xl-4 col-sm-6">
                                 <div class="axil-product product-style-one mb--30">
                                     <div class="thumbnail">
-                                        <a href="/{{pro.Slug}}">
+                                        <a href="{{pro.Slug}}/">
                                             <img style="width:200px; hight:200px;" src="{{pro.Image.url}}" alt="Product Images">
                                         </a>
                                         <div class="label-block label-right">
@@ -146,7 +146,7 @@
                                     </div>
                                     <div class="product-content">
                                         <div class="inner">
-                                            <h5 class="title"><a href="/{{pro.Slug}}" >{{pro.Name}}</a></h5>
+                                            <h5 class="title"><a href="{{pro.Slug}}/" >{{pro.Name}}</a></h5>
                                             <div class="product-price-variant">
                                                 <span class="price current-price">{{pro.Price}}</span>
                                                 
@@ -159,7 +159,9 @@
                             <!-- End Single Product  -->
                         </div>
                         <div class="text-center pt--20">
-                            <a href="#" class="axil-btn btn-bg-lighter btn-load-more">Load more</a>
+
+                                <a href="#" class="axil-btn btn-bg-lighter btn-load-more">Load more</a>
+
                         </div>
                     </div>
                 </div>

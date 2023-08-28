@@ -4,113 +4,88 @@ from .models import Product, Brand , Category,SubCategory,Review,Product_Images
 from cart.models import Cart,CartItem,Wishlist,wishlistItem
 from django.views.generic import ListView,DeleteView,DetailView
 from django.contrib.auth.decorators import login_required
+from django.views.generic import ListView
 from django.db import transaction
 from django import forms
 from django.db.models import Count
+from django.views import View
 from .forms import AddProductForm,AddReviewForm
+from .utils import COLOR_MAP
 # Create your views here.
 
 
-def ShopView(request, slug=None):
-    sort_by = request.GET.get('sort_by', '')  # Get the sorting parameter from the URL query string
-    pro = Product.objects.all()
-    category = Category.objects.annotate(product_count=Count('products'))
+class ShopGridView(ListView):
+    template_name = 'shop/grid.html'
+    context_object_name = 'pro'
+    paginate_by = 9  # Number of products per page
 
-    if slug:
-        pro = pro.filter(Slug=slug)
+    def get_queryset(self):
+        sort_by = self.request.GET.get('sort_by', '')
+        products = Product.objects.all()
 
-    if sort_by == 'price_high':
-        pro = pro.order_by('-Price')  # Sorting by price high to low
-    elif sort_by == 'price_low':
-        pro = pro.order_by('Price')   # Sorting by price low to high
+        category_slug = self.kwargs.get('category_id')
+        subcategory_slug = self.kwargs.get('sub_id')
 
-    return render(request, 'shop/shop.html', {'pro': pro, 'category': category})
+        if category_slug:
+            products = products.filter(SubCategory__category__Slug=category_slug)
 
+        if subcategory_slug:
+            products = products.filter(SubCategory__Slug=subcategory_slug)
 
-def Shop_grid_View(request, category_id=None, sub_id=None):
-    sort_by = request.GET.get('sort_by', '')  # Get the sorting parameter from the URL query string
-    products = Product.objects.all()
-    subcategories = SubCategory.objects.annotate(product_count=Count('products'))
+        if sort_by == 'price_high':
+            products = products.order_by('-Price')
+        elif sort_by == 'price_low':
+            products = products.order_by('Price')
 
-    if category_id:
-        subcategories = subcategories.filter(Slug=category_id)
-        products = products.filter(
-            SubCategory__Slug=category_id)  # Using SubCategory__Slug to filter by subcategory's slug
-    if sub_id:
-        products = products.filter(SubCategory=sub_id)
+        return products
 
-    if sort_by == 'price_high':
-        products = products.order_by('-Price')  # Sorting by price high to low
-    elif sort_by == 'price_low':
-        products = products.order_by('Price')  # Sorting by price low to high
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        subcategories = SubCategory.objects.annotate(product_count=Count('products'))
+        context['subCategory'] = subcategories
+        return context
+#___________________________________________________________________________
 
-    return render(request, 'shop/grid.html', {'pro': products, 'subCategory': subcategories})
+class ProductDetailView(View):
+    template_name = 'shop/detail.html'
 
+    def get_context_data(self, slug):
+        pro = Product.objects.get(Slug=slug)
+        subcategory = pro.SubCategory
+        related = Product.objects.filter(SubCategory=subcategory).exclude(Slug=slug)
+        related_images = Product_Images.objects.filter(product=pro)
+        color_code = pro.Color
+        color_name = COLOR_MAP.get(color_code, 'Unknown Color')
+        reviews = Review.objects.filter(product=pro)
 
-COLOR_MAP = {
-    '#000000': 'Black',
-    '#FFFFFF': 'White',
-    '#FF0000': 'Red',
-    '#00FF00': 'Green',
-    '#0000FF': 'Blue',
-    '#FFFF00': 'Yellow',
-    '#FF00FF': 'Magenta',
-    '#00FFFF': 'Cyan',
-    '#800000': 'Maroon',
-    '#008000': 'Olive',
-    '#000080': 'Navy',
-    '#808000': 'Purple',
-    '#800080': 'Purple',
-    '#008080': 'Teal',
-    '#808080': 'Gray',
-    '#C0C0C0': 'Silver',
-    '#FFC0CB': 'Pink',
-    '#FFA500': 'Orange',
-    # Add more color mappings here
-}
+        context = {
+            'pro': pro,
+            'color_name': color_name,
+            'reviews': reviews,
+            'related': related,
+            'related_images': related_images,
+        }
+        return context
 
+    def get(self, request, slug):
+        context = self.get_context_data(slug)
+        form = AddReviewForm()
+        context['form'] = form
+        return render(request, self.template_name, context)
 
-
-def detail(request, slug):
-    pro = Product.objects.get(Slug=slug)
-    
-    # Get the subcategory of the current product
-    subcategory = pro.SubCategory
-    
-    # Fetch related products with the same subcategory
-    related = Product.objects.filter(SubCategory=subcategory).exclude(Slug=slug)
-    
-    # Fetch images for related products
-    related_images = Product_Images.objects.filter(product=pro)
-    
-    color_code = pro.Color
-    color_name = COLOR_MAP.get(color_code, 'Unknown Color')
-    
-    # Fetch existing reviews for the product
-    reviews = Review.objects.filter(product=pro)
-
-    if request.method == 'POST':
+    def post(self, request, slug):
+        context = self.get_context_data(slug)
         form = AddReviewForm(request.POST)
         if form.is_valid():
             form = form.save(commit=False)
-            form.product = pro
+            form.product = context['pro']
             form.user = request.user
             form.save()
-            # Redirect back to the detail page after adding the review
             return redirect('detail', slug=slug)
-    else:
-        form = AddReviewForm()
+        context['form'] = form
+        return render(request, self.template_name, context)
 
-    return render(request, 'shop/detail.html', {
-        'pro': pro,
-        'color_name': color_name,
-        'reviews': reviews,
-        'form': form,
-        'related': related,
-        'related_images': related_images,  # Pass the related product images to the template
-    })
-
-
+#_________________________________________________________________
 @login_required
 def add_product(request):
     if request.method == "POST":
@@ -119,7 +94,7 @@ def add_product(request):
             myform = form.save(commit=False)
             myform.user = request.user
             myform.save()
-            return redirect('shop')  # Redirect to product list page after adding product
+            return redirect('/shop')  # Redirect to product list page after adding product
     else:
         form = AddProductForm()
 
