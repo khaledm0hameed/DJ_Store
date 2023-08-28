@@ -213,7 +213,7 @@
                             <div class="col">
                             <div class="axil-product-list">
                                 <div class="thumbnail">
-                                    <a href="{% url 'detail' product.id  %}">
+                                    <a href="shop/{{product.Slug}}" >
                                         <img data-sal="zoom-in" data-sal-delay="100" data-sal-duration="1500" style="width:120px; hight:120px;" src="{{product.Image.url}}" alt="Yantiti Leather Bags">
                                     </a>
                                 </div>
@@ -228,7 +228,7 @@
                                 </span>
 
                                     </div>
-                                    <h6 class="product-title"><a href="{% url 'detail' product.id  %}">{{product.Name}}</a></h6>
+                                    <h6 class="product-title"><a href="shop/{{product.Slug}}">{{product.Name}}</a></h6>
                                     <div class="product-price-variant">
                                         <span class="price current-price">EG{{product.Price}}</span>
 
