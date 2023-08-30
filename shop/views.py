@@ -12,6 +12,7 @@ from django.views import View
 from .forms import AddProductForm,AddReviewForm
 from .utils import COLOR_MAP
 from django.utils import timezone
+from django.core.paginator import Paginator
 # Create your views here.
 
 
@@ -45,6 +46,8 @@ class ShopGridView(ListView):
         subcategories = SubCategory.objects.annotate(product_count=Count('products'))
         context['subCategory'] = subcategories
         return context
+
+
 #___________________________________________________________________________
 
 class ProductDetailView(View):

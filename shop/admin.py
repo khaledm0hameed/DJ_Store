@@ -8,6 +8,7 @@ class ProductImagesTupolar(admin.TabularInline):
 # Product admin with inline ProductImagesTupolar
 class ProductAdmin(admin.ModelAdmin):
     inlines = [ProductImagesTupolar]
+    search_fields = ['Name']  # Add this line to enable search by product name
 
 # Register models with their respective admin classes
 admin.site.register(Product, ProductAdmin)
@@ -17,3 +18,4 @@ admin.site.register(Brand)
 admin.site.register(Review)
 admin.site.register(Flash)
 admin.site.register(Ofer)
+

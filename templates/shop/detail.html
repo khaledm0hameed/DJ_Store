@@ -234,7 +234,7 @@
                     <div class="slick-single-layout">
                         <div class="axil-product">
                             <div class="thumbnail">
-                                <a href="{{pro.Slug}}/">
+                                <a href="{% url 'detail' pro.Slug %}">
                                     <img src="{{pro.Image.url}}" style="width:200px;hight:200px;" alt="Product Images">
                                 </a>
                                 <div class="label-block label-right">
@@ -249,7 +249,7 @@
                             </div>
                             <div class="product-content">
                                 <div class="inner">
-                                    <h5 class="title"><a href="{{pro.Slug}}/">{{pro.Name}}</a></h5>
+                                    <h5 class="title"><a href="{% url 'detail' pro.Slug %}">{{pro.Name}}</a></h5>
                                     <div class="product-price-variant">
                                         <span class="price current-price">{{pro.Price}}</span>
                                     </div>
