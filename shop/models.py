@@ -79,11 +79,12 @@ class Product_Images (models.Model):
 #_________________________________________________________
 
 class Review(models.Model):
-    user = models.ForeignKey(CustomUser,on_delete=models.SET_NULL,related_name='review_user',null=True,blank=True)
-    product = models.ForeignKey(Product,on_delete=models.SET_NULL,related_name='review_product',null=True,blank=True)
+    user = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, related_name='review_user', null=True, blank=True)
+    product = models.ForeignKey(Product, on_delete=models.SET_NULL, related_name='review_product', null=True, blank=True)
     content = models.TextField(max_length=20000)
     date = models.DateField(default=timezone.now)
-    rate = models.IntegerField(null= True,blank=True)
+    rate = models.IntegerField(null=True, blank=True)
+
     def __str__(self):
         return self.content
 #__________________________________________________________________________________

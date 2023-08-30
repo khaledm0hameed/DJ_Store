@@ -11,6 +11,7 @@ from django.db.models import Count
 from django.views import View
 from .forms import AddProductForm,AddReviewForm
 from .utils import COLOR_MAP
+from django.utils import timezone
 # Create your views here.
 
 
@@ -77,15 +78,22 @@ class ProductDetailView(View):
         context = self.get_context_data(slug)
         form = AddReviewForm(request.POST)
         if form.is_valid():
-            form = form.save(commit=False)
-            form.product = context['pro']
-            form.user = request.user
-            form.save()
+            content = form.cleaned_data['message']
+            name = form.cleaned_data['name']
+            email = form.cleaned_data['email']
+            rate = form.cleaned_data['rate']
+
+            review = Review.objects.create(
+                user=request.user,
+                product=context['pro'],
+                content=content,
+                date=timezone.now(),
+                rate=rate
+            )
             return redirect('detail', slug=slug)
         context['form'] = form
         return render(request, self.template_name, context)
-
-#_________________________________________________________________
+#_______________________________________________________________________________
 @login_required
 def add_product(request):
     if request.method == "POST":

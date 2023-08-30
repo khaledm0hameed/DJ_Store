@@ -8,8 +8,9 @@ class AddProductForm(forms.ModelForm):
 
 
 
+class AddReviewForm(forms.Form):
+    message = forms.CharField(widget=forms.Textarea, required=False)
+    name = forms.CharField()
+    email = forms.EmailField()
+    rate = forms.IntegerField(min_value=1, max_value=5, widget=forms.NumberInput(attrs={'class': 'rating-input'}))
 
-class AddReviewForm(forms.ModelForm):
-    class Meta:
-        model = Review
-        fields = ['content']
