@@ -33,7 +33,6 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     img = models.ImageField(upload_to='profile_images/', blank=True, null=True, default='profile_images/default_profile.jpeg')
 
     email = models.EmailField(unique=True, null=True)
-    vwrfi = models.CharField(max_length=100)  # Add the vwrfi field
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
 
