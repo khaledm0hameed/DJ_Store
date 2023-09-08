@@ -53,7 +53,7 @@
                                 <div class="shop-submenu">
                                     <ul>
                                         {% for brand in brands %}
-                                           <li><a  href="{% url 'shop' %}?brand={{ brand.name }}">{{ brand.name }}</a></li>
+                                           <li><a  href="{% url 'shop' %}?brand={{ brand.Slug }}">{{ brand.name }}</a></li>
                                         {% endfor %}
 
                                     </ul>

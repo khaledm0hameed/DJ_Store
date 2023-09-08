@@ -36,7 +36,7 @@ class ShopGridView(ListView):
             products = products.filter(SubCategory__Slug=subcategory_slug)
 
         if brand:  # Filter by brand if the brand parameter is provided in the URL
-            products = products.filter(Brand__name=brand)
+            products = products.filter(Brand__Slug=brand)
 
         if sort_by == 'price_high':
             products = products.order_by('-Price')
