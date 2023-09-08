@@ -17,6 +17,7 @@ class Order(models.Model):
         ('shipped', 'Shipped'),
         ('delivered', 'Delivered'),
         ('cancelled', 'Cancelled'),
+        ('complate', 'complate'),
     ]
 
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending',null=True) 
