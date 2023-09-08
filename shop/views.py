@@ -23,6 +23,7 @@ class ShopGridView(ListView):
 
     def get_queryset(self):
         sort_by = self.request.GET.get('sort_by', '')
+        brand = self.request.GET.get('brand', '')  # Get the brand parameter from the URL
         products = Product.objects.all()
 
         category_slug = self.kwargs.get('category_id')
@@ -33,6 +34,9 @@ class ShopGridView(ListView):
 
         if subcategory_slug:
             products = products.filter(SubCategory__Slug=subcategory_slug)
+
+        if brand:  # Filter by brand if the brand parameter is provided in the URL
+            products = products.filter(Brand__name=brand)
 
         if sort_by == 'price_high':
             products = products.order_by('-Price')
@@ -45,6 +49,10 @@ class ShopGridView(ListView):
         context = super().get_context_data(**kwargs)
         subcategories = SubCategory.objects.annotate(product_count=Count('products'))
         context['subCategory'] = subcategories
+
+        # Get a list of all available brands and include it in the context
+        context['brands'] = Brand.objects.all()
+
         return context
 
 

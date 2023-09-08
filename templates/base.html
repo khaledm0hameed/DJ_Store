@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>eTrade || Home-01</title>
+    <title>OFE Store</title>
     <meta name="robots" content="noindex, follow" />
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -86,10 +86,10 @@
                 <div class="header-navbar">
                     <div class="header-brand">
                         <a href="{% url 'home' %}" class="logo logo-dark">
-                            <img src="{% static 'assets/images/logo/logo.png' %}" alt="Site Logo">
+                            <img src="{% static 'assets/images/logo.png' %}" style="width: 157px; height: 100px;" alt="Site Logo">
                         </a>
                         <a href="{% url 'home' %}" class="logo logo-light">
-                            <img src="{% static 'assets/images/logo/logo-light.png' %}" alt="Site Logo">
+                            <img src="{% static 'assets/images/logo/logo.png' %}" alt="Site Logo">
                         </a>
                     </div>
 
@@ -202,7 +202,14 @@
                             <div class="inner">
                                 <ul>
                                     <li><a href="{% url 'user' %}">My Account</a></li>
-                                    <li><a href="{% url 'signup' %}">Login / Register</a></li>
+                                    {% if user.is_authenticated %}
+                                        <li class="withsubs">
+                                            <a href="{% url 'logout' %}">Sign OUT</a>
+                                        </li>
+                                    {% else %}
+                                        <li><a href="{% url 'signup' %}">Login / Register</a></li>
+                                    {% endif %}
+                                    
                                     <li><a href="{% url 'cart' %}">Cart</a></li>
                                     <li><a href="{% url 'wishlist_list' %}">Wishlist</a></li>
                                     <li><a href="{% url 'shop' %}">Shop</a></li>
