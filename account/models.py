@@ -3,6 +3,11 @@
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db import models
 
+Role = [
+    ('admin', 'admin'),
+    ('customer', 'customer'),
+    ('Saler', 'Saler'),
+]
 
 class CustomUserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
@@ -31,6 +36,8 @@ class CustomUserManager(BaseUserManager):
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     name = models.CharField(max_length=100, null=True)
     img = models.ImageField(upload_to='profile_images/', blank=True, null=True, default='profile_images/default_profile.jpeg')
+    role = models.CharField(choices=Role, max_length=30, null=True, blank=True)
+
 
     email = models.EmailField(unique=True, null=True)
     is_staff = models.BooleanField(default=False)

@@ -67,17 +67,14 @@
                                                 <ul class="color-variant">
                                                     <li class="color-extra-01 active"><span><span class="color"></span></span>
                                                     </li>
-                                                    <li class="color-extra-02"><span><span class="color"></span></span>
-                                                    </li>
-                                                    <li class="color-extra-03"><span><span class="color"></span></span>
-                                                    </li>
                                                 </ul>
                                             </div>
                                         </div>
                                         <!-- End Product Variation  -->
 
                                         <!-- Start Product Variation  -->
-                                        <div class="product-variation product-size-variation">
+                                        {% if pro.Category.name == "Clothes" %}
+                                            <div class="product-variation product-size-variation">
                                             <h6 class="title">Size:</h6>
                                             <ul class="range-variant">
                                                 <li>xs</li>
@@ -88,6 +85,7 @@
                                             </ul>
                                         </div>
                                         <!-- End Product Variation  -->
+                                        {% endif %}
 
                                     </div>
 

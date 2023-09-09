@@ -108,6 +108,11 @@
                                 <li><a href="#">About</a></li>
                                 <li><a href="#">Blog</a></li>
                                 <li><a href="{% url 'contact' %}">Contact</a></li>
+                               {% if user.is_authenticated %}
+                                    {% if user.role == "admin" or user.role == "saler" %}
+                                        <li><a href="{% url 'add_product' %}">Add_Product</a></li>
+                                    {% endif %}
+                                {% endif %}
                             </div>
                         </nav>
                         <!-- End Mainmanu Nav -->

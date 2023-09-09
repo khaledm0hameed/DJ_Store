@@ -13,6 +13,9 @@ from .forms import AddProductForm,AddReviewForm
 from .utils import COLOR_MAP
 from django.utils import timezone
 from django.core.paginator import Paginator
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+from .forms import AddProductForm  # Import your product form
 # Create your views here.
 
 
@@ -62,7 +65,7 @@ class ProductDetailView(View):
     template_name = 'shop/detail.html'
 
     def get_context_data(self, slug):
-        pro = Product.objects.get(Slug=slug)
+        pro = get_object_or_404(Product, Slug=slug)
         subcategory = pro.SubCategory
         related = Product.objects.filter(SubCategory=subcategory).exclude(Slug=slug)
         related_images = Product_Images.objects.filter(product=pro)
@@ -105,19 +108,19 @@ class ProductDetailView(View):
         context['form'] = form
         return render(request, self.template_name, context)
 #_______________________________________________________________________________
+
 @login_required
 def add_product(request):
     if request.method == "POST":
         form = AddProductForm(request.POST, request.FILES)
         if form.is_valid():
             myform = form.save(commit=False)
-            myform.user = request.user
+            myform.user = request.user  # Assign the current user to the product
             myform.save()
-            return redirect('/shop')  # Redirect to product list page after adding product
+            return redirect('/shop')  # Redirect to the product list page after adding product
     else:
         form = AddProductForm()
 
     return render(request, 'shop/add_product.html', {'form': form})
-
 
 
