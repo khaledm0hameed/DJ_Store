@@ -6,7 +6,7 @@ urlpatterns = [
     path('<slug:slug>/', ProductDetailView.as_view(), name='detail'),
     path('grid/category/<slug:category_id>/', ShopGridView.as_view(), name='grid_by_category'),
     path('grid/category/<slug:category_id>/<slug:sub_id>/', ShopGridView.as_view(), name='grid_by_subcategory'),
-    path('add_product/', add_product, name='add_product'),  # Update the view to use the function-based view
+    path('add_product/', add_product, name='add_product'), # Update the view to use the function-based view
 ]
 
 
