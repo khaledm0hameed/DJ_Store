@@ -110,7 +110,7 @@
                                 <li><a href="{% url 'contact' %}">Contact</a></li>
                                {% if user.is_authenticated %}
                                     {% if user.role == "admin" or user.role == "saler" %}
-                                        <li><a href="{% url 'add_product' %}">Add_Product</a></li>
+                                        <li><a href="{% url 'add_product' %}">AddProduct</a></li>
                                     {% endif %}
                                 {% endif %}
                             </div>
