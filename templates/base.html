@@ -41,7 +41,7 @@
                                     <li><a class="dropdown-item" href="#">Arabic</a></li>
                                 </ul>
                             </div>
-                    
+
                         </div>
                     </div>
                     <div class="col-sm-6">
@@ -88,8 +88,6 @@
                             <div class="mainmenu">
                                 <li><a href="{% url 'home' %}">Home</a></li>
                                 <li><a href="{% url 'shop' %}">Shop</a></li>
-                                <li><a href="#">About</a></li>
-                                <li><a href="#">Blog</a></li>
                                 <li><a href="{% url 'contact' %}">Contact</a></li>
                                {% if user.is_authenticated %}
                                     {% if user.role == "admin" or user.role == "saler" %}

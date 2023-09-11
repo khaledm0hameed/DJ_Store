@@ -33,10 +33,12 @@ class ShopGridView(ListView):
         subcategory_slug = self.kwargs.get('sub_id')
 
         if category_slug:
+            # Filter products by category
             products = products.filter(SubCategory__category__Slug=category_slug)
 
-        if subcategory_slug:
-            products = products.filter(SubCategory__Slug=subcategory_slug)
+            if subcategory_slug:
+                # Filter products by subcategory
+                products = products.filter(SubCategory__Slug=subcategory_slug)
 
         if brand:  # Filter by brand if the brand parameter is provided in the URL
             products = products.filter(Brand__Slug=brand)
@@ -50,14 +52,24 @@ class ShopGridView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        subcategories = SubCategory.objects.annotate(product_count=Count('products'))
+
+        category_slug = self.kwargs.get('category_id')
+
+        if category_slug:
+            # If a category is specified in the URL, filter subcategories related to that category
+            selected_category = Category.objects.get(Slug=category_slug)
+            subcategories = SubCategory.objects.filter(category=selected_category).annotate(
+                product_count=Count('products'))
+        else:
+            # If no category is specified, show all subcategories
+            subcategories = SubCategory.objects.annotate(product_count=Count('products'))
+
         context['subCategory'] = subcategories
 
         # Get a list of all available brands and include it in the context
         context['brands'] = Brand.objects.all()
 
         return context
-
 
 #___________________________________________________________________________
 
