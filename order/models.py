@@ -20,7 +20,7 @@ class Order(models.Model):
         ('complate', 'complate'),
     ]
 
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending',null=True) 
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='delivered',null=True)
     def __str__(self):
         return f"الطلب رقم {self.pk} للسيد {self.name}"
     def save_cart_items(self, cart_items):

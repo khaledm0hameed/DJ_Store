@@ -94,6 +94,11 @@
                                         <li><a href="{% url 'add_product' %}">AddProduct</a></li>
                                     {% endif %}
                                 {% endif %}
+                                {% if user.is_authenticated %}
+                                    {% if user.role == "admin" or user.role == "delivery" %}
+                                        <li><a href="{% url 'delivery' %}">Orders</a></li>
+                                    {% endif %}
+                                {% endif %}
                             </div>
                         </nav>
                         <!-- End Mainmanu Nav -->

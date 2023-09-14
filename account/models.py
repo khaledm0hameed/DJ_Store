@@ -7,6 +7,7 @@ Role = [
     ('admin', 'admin'),
     ('customer', 'customer'),
     ('Saler', 'Saler'),
+    ('delivery', 'delivery'),
 ]
 
 class CustomUserManager(BaseUserManager):

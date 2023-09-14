@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+ <main class="main-wrapper">
+        <!-- Start Breadcrumb Area  -->
+
+        <!-- End Breadcrumb Area  -->
+
+        <!-- Start My Account Area  -->
+        <div class="axil-dashboard-area axil-section-gap">
+            <div class="container">
+                <div class="axil-dashboard-warp">
+                    <div class="row">
+                        <div class="col-xl-3 col-md-4">
+                            <aside class="axil-dashboard-aside">
+                                <nav class="axil-dashboard-nav">
+                                    <div class="nav nav-tabs" role="tablist">
+
+                                        <a class="nav-item nav-link" data-bs-toggle="tab" href="#nav-orders" role="tab" aria-selected="false"><i class="fas fa-shopping-basket"></i>Orders</a>
+
+
+                                    </div>
+                                </nav>
+                            </aside>
+                        </div>
+                        <div class="col-xl-9 col-md-8">
+                            <div class="tab-content">
+                                <div class="tab-pane fade" id="nav-orders" role="tabpanel">
+                                    <div class="axil-dashboard-order">
+                                        <div class="table-responsive">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">Order</th>
+                                                        <th scope="col">Adreese</th>
+                                                        <th scope="col">Phone</th>
+                                                        <th scope="col">Name</th>
+                                                        <th scope="col">Total</th>
+
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                  {% for order in orders %}
+                                                    <tr>
+                                                        <th scope="row">#{{ order.pk }}</th>
+                                                        <td>{{order.address}}</td>
+                                                        <td>{{ order.phone }}</td>
+                                                        <td>{{ order.name }}</td>
+                                                        <td>EG {{order.total_price}} </td>
+
+                                                    </tr>
+                                                  {% endfor %}
+                                                </tbody>
+
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+{% endblock content %}

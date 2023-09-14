@@ -62,3 +62,8 @@ def checkout(request):
         total_price = 0
 
     return render(request, 'shop/checkout.html', {'cart_items': cart_items, 'total_price': total_price})
+
+
+def delivery(request):
+    orders = Order.objects.filter(status="delivered")
+    return render(request,'delivery/delivery.html',{"orders":orders})
