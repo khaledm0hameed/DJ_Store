@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'cart',
     'order',
     'addproduct',
+    'settings',
 ]
 
 AUTH_USER_MODEL = 'account.CustomUser' 
@@ -89,6 +90,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'settings.context.context',
             ],
         },
     },

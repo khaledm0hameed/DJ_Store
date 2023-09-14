@@ -69,7 +69,7 @@
                 <div class="header-navbar">
                     <div class="header-brand">
                         <a href="{% url 'home' %}" class="logo logo-dark">
-                            <img src="{% static 'assets/images/logo.png' %}" style="width: 157px; height: 100px;" alt="Site Logo">
+                            <img src="{{data.logo.url}}" style="width: 157px; height: 100px;" alt="Site Logo">
                         </a>
                         <a href="{% url 'home' %}" class="logo logo-light">
                             <img src="{% static 'assets/images/logo/logo.png' %}" alt="Site Logo">
@@ -178,9 +178,9 @@
                             <div class="inner">
 
                                 <ul class="support-list-item">
-                                    <li><a href="mailto:example@domain.com"><i class="fal fa-envelope-open"></i> khaled.mohamed.talaat@gmail.com</a></li>
-                                    <li><a href="tel:(+01)850-315-5862"><i class="fal fa-phone-alt"></i> (+2) 01004993573</a></li>
-                                     <li><i class="fal fa-map-marker-alt"></i>Egypt - Cairo _ mostaqbalCity - 22T - 12</li>
+                                    <li><a href="mailto:example@domain.com"><i class="fal fa-envelope-open"></i> {{data.emial_us}}</a></li>
+                                    <li><a href="tel:(+01)850-315-5862"><i class="fal fa-phone-alt"></i> (+2) {{data.call_us}}</a></li>
+                                     <li><i class="fal fa-map-marker-alt"></i>{{data.adreese}}</li>
                                 </ul>
                             </div>
                         </div>
@@ -227,26 +227,7 @@
                     <!-- End Single Widget  -->
                     <!-- Start Single Widget  -->
                     <div class="col-lg-3 col-sm-6">
-                        <div class="axil-footer-widget">
-                            <h5 class="widget-title">Download App</h5>
-                            <div class="inner">
-                                <span>Save $3 With App & New User only</span>
-                                <div class="download-btn-group">
-                                    <div class="qr-code">
-                                        <img src="{% static 'assets/images/others/qr.png' %}" alt="Axilthemes">
-                                    </div>
-                                    <div class="app-link">
-                                        <a href="#">
-                                            <img src="{% static 'assets/images/others/app-store.png' %}" alt="App Store">
-                                        </a>
-                                        <a href="#">
-                                            <img src="{% static 'assets/images/others/play-store.png' %}" alt="Play Store">
-                                        </a>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
+                     
                     </div>
                     <!-- End Single Widget  -->
                 </div>
@@ -259,31 +240,14 @@
                 <div class="row align-items-center">
                     <div class="col-xl-4">
                         <div class="social-share">
-                            <a href="#"><i class="fab fa-facebook-f"></i></a>
-                            <a href="#"><i class="fab fa-instagram"></i></a>
-                            <a href="#"><i class="fab fa-twitter"></i></a>
-                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                            <a href="#"><i class="fab fa-discord"></i></a>
+                            <a href="{{data.facebook_link}}"><i class="fab fa-facebook-f"></i></a>
+                            <a href="{{data.instagram}}"><i class="fab fa-instagram"></i></a>
+                            <a href="{{data.twitter}}"><i class="fab fa-twitter"></i></a>
+                            <a href="{{data.linked}}"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="{{data.discord_link}}"><i class="fab fa-discord"></i></a>
                         </div>
                     </div>
-                    <div class="col-xl-4 col-lg-12">
-                        <div class="copyright-left d-flex flex-wrap justify-content-center">
-                            <ul class="quick-link">
-                                <li>© 2023. All rights reserved by <a target="_blank" href="https://axilthemes.com/">Axilthemes</a>.</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-xl-4 col-lg-12">
-                        <div class="copyright-right d-flex flex-wrap justify-content-xl-end justify-content-center align-items-center">
-                            <span class="card-text">Accept For</span>
-                            <ul class="payment-icons-bottom quick-link">
-                                <li><img src="{% static 'assets/images/icons/cart/cart-1.png' %}" alt="paypal cart"></li>
-                                <li><img src="{% static 'assets/images/icons/cart/cart-2.png' %}" alt="paypal cart"></li>
-                                <li><img src="{% static 'assets/images/icons/cart/cart-5.png' %}" alt="paypal cart"></li>
-                            </ul>
-
-                        </div>
-                    </div>
+                    
                 </div>
             </div>
         </div>
