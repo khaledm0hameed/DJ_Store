@@ -78,7 +78,9 @@
                                             <div class="product-variation product-size-variation">
                                             <h6 class="title">Size:</h6>
                                             <ul class="range-variant">
-                                                <li>xs</li>
+                                                {% for size in related_size %}
+                                                    <li>{{size.Size}}</li>
+                                                {% endfor %}
                                             </ul>
                                         </div>
                                         <!-- End Product Variation  -->

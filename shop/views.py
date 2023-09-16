@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from django.shortcuts import get_object_or_404, redirect
-from .models import Product, Brand , Category,SubCategory,Review,Product_Images,Product_Color,COLOR_MAP
+from .models import Product, Brand , Category,SubCategory,Review,Product_Images,Product_Color,COLOR_MAP,Product_Size
 from cart.models import Cart,CartItem,Wishlist,wishlistItem
 from django.views.generic import ListView,DeleteView,DetailView
 from django.contrib.auth.decorators import login_required
@@ -83,6 +83,7 @@ class ProductDetailView(View):
         related_images = Product_Images.objects.filter(product=pro)
         reviews = Review.objects.filter(product=pro)
         related_Color = Product_Color.objects.filter(product=pro)
+        related_size = Product_Size.objects.filter(product=pro)
 
         # Retrieve all colors associated with the product
 
@@ -96,6 +97,7 @@ class ProductDetailView(View):
             'related': related,
             'related_images': related_images,
             'related_Color':related_Color,
+            'related_size':related_size,
         }
         return context
 

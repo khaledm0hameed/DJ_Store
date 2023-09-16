@@ -61,6 +61,13 @@ COLOR_MAP = [
     # ...
 ]
 #_______________________________________________
+Size_MAP = [
+    ('s','s'),
+    ('m','m'),
+    ('l','l'),
+    ('xl','xl'),
+]
+#_______________________________________________
 class Product(models.Model):
     user = models.ForeignKey(CustomUser,on_delete=models.CASCADE,related_name='Product_user',null=True,blank=True)
     Name = models.CharField(max_length=60)
@@ -99,7 +106,10 @@ class Product_Color (models.Model):
     product = models.ForeignKey(Product,on_delete=models.SET_NULL,related_name='Product_Color',null=True,blank=True)
     Color = models.CharField(choices=COLOR_MAP, max_length=30, null=True, blank=True)
 #________________________________________________________
-
+class Product_Size (models.Model):
+    product = models.ForeignKey(Product,on_delete=models.SET_NULL,related_name='Product_Size',null=True,blank=True)
+    Size = models.CharField(choices=Size_MAP, max_length=30, null=True, blank=True)
+#________________________________________________________
 class Review(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, related_name='review_user', null=True, blank=True)
     product = models.ForeignKey(Product, on_delete=models.SET_NULL, related_name='review_product', null=True, blank=True)
