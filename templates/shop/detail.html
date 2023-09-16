@@ -54,34 +54,44 @@
                                         </div>
                                     </div>
                                     <ul class="product-meta">
-                                        <li><i class="fal fa-check"></i>In stock</li>
+                                        {% if pro.Availability == True %}
+                                            <li><i class="fal fa-check"></i>In stock</li>
+                                        {% else %}
+                                            <li><i class="fal fa-check"></i>Out stock</li>
+                                        {% endif %}
+
+
+
+
+
                                     </ul>
-                                    <p class="description">In ornare lorem ut est dapibus, ut tincidunt nisi pretium. Integer ante est, elementum eget magna. Pellentesque sagittis dictum libero, eu dignissim tellus.</p>
+                                    <p class="description">{{pro.Description}}</p>
 
                                     <div class="product-variations-wrapper">
 
                                         <!-- Start Product Variation  -->
-                                        <div class="product-variation">
-                                            <h6 class="title">Colors:</h6>
-                                            <div class="color-variant-wrapper">
-                                                <ul class="color-variant">
-                                                    <li class="color-extra-01 active"><span><span class="color"></span></span>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
+
                                         <!-- End Product Variation  -->
 
                                         <!-- Start Product Variation  -->
-                                        {% if pro.Category.name == "Clothes" %}
+                                        {% if pro.Have_size == True %}
                                             <div class="product-variation product-size-variation">
                                             <h6 class="title">Size:</h6>
                                             <ul class="range-variant">
                                                 <li>xs</li>
-                                                <li>s</li>
-                                                <li>m</li>
-                                                <li>l</li>
-                                                <li>xl</li>
+                                            </ul>
+                                        </div>
+                                        <!-- End Product Variation  -->
+                                        {% endif %}
+
+                                         {% if pro.Have_color == True %}
+                                            <div class="product-variation product-size-variation">
+                                            <h6 class="title">Color:</h6>
+                                            <ul class="range-variant">
+                                                <li>{{pro.Color}}</li>
+                                                {% for color in related_Color %}
+                                                    <li>{{color.Color}}</li>
+                                                {% endfor %}
                                             </ul>
                                         </div>
                                         <!-- End Product Variation  -->

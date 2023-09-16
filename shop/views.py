@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from django.shortcuts import get_object_or_404, redirect
-from .models import Product, Brand , Category,SubCategory,Review,Product_Images
+from .models import Product, Brand , Category,SubCategory,Review,Product_Images,Product_Color,COLOR_MAP
 from cart.models import Cart,CartItem,Wishlist,wishlistItem
 from django.views.generic import ListView,DeleteView,DetailView
 from django.contrib.auth.decorators import login_required
@@ -81,16 +81,21 @@ class ProductDetailView(View):
         subcategory = pro.SubCategory
         related = Product.objects.filter(SubCategory=subcategory).exclude(Slug=slug)
         related_images = Product_Images.objects.filter(product=pro)
-        color_code = pro.Color
-        color_name = COLOR_MAP.get(color_code, 'Unknown Color')
         reviews = Review.objects.filter(product=pro)
+        related_Color = Product_Color.objects.filter(product=pro)
+
+        # Retrieve all colors associated with the product
+
+
+        # Filter out None values and retrieve color names
+
 
         context = {
             'pro': pro,
-            'color_name': color_name,
             'reviews': reviews,
             'related': related,
             'related_images': related_images,
+            'related_Color':related_Color,
         }
         return context
 
@@ -116,6 +121,14 @@ class ProductDetailView(View):
                 date=timezone.now(),
                 rate=rate
             )
+
+            # Create a ProductUpdate instance to record the update message
+            update_message = f"Review added by {name}: {content}"
+            product_update = ProductUpdate.objects.create(
+                product=context['pro'],
+                update_message=update_message,
+            )
+
             return redirect('detail', slug=slug)
         context['form'] = form
         return render(request, self.template_name, context)

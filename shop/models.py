@@ -45,6 +45,22 @@ flag = [
 ]
 
 #______________________________________________
+# Define your COLOR_MAP dictionary
+COLOR_MAP = [
+    ('Black' ,'Black'),
+    ('White', 'White'),
+    ('Red', 'Red'),
+    ('Green', 'Green'),
+    ('Blue','Blue'),
+    ('Yellow', 'Yellow'),
+    ('Magenta', 'Magenta'),
+    ('Cyan', 'Cyan'),
+    ('Orange', 'Orange'),
+    ('Purple', 'Purple')
+    # Add more color code/name pairs as needed, up to 100
+    # ...
+]
+#_______________________________________________
 class Product(models.Model):
     user = models.ForeignKey(CustomUser,on_delete=models.CASCADE,related_name='Product_user',null=True,blank=True)
     Name = models.CharField(max_length=60)
@@ -52,7 +68,9 @@ class Product(models.Model):
     Description = models.TextField(max_length=2000)
     Image = models.ImageField(upload_to='images/')
     Availability = models.BooleanField(default=True)
-    Color=ColorField(default='#000000')
+    Have_color = models.BooleanField(default=True)
+    Have_size = models.BooleanField(default=True)
+    Color=models.CharField(choices=COLOR_MAP, max_length=30, null=True, blank=True)
     Category=models.ForeignKey(Category, on_delete=models.SET_NULL, related_name="products",null=True,blank=True)
     SubCategory=models.ForeignKey(SubCategory, on_delete=models.SET_NULL, related_name="products",null=True,blank=True)
     Brand = models.ForeignKey(Brand, on_delete=models.CASCADE, related_name="Brand_Product",null=True,blank=True)
@@ -77,6 +95,10 @@ class Product_Images (models.Model):
     product = models.ForeignKey(Product,on_delete=models.SET_NULL,related_name='Product_images',null=True,blank=True)
     images=models.ImageField(upload_to='productimages/',null=True,blank=True)
 #_________________________________________________________
+class Product_Color (models.Model):
+    product = models.ForeignKey(Product,on_delete=models.SET_NULL,related_name='Product_Color',null=True,blank=True)
+    Color = models.CharField(choices=COLOR_MAP, max_length=30, null=True, blank=True)
+#________________________________________________________
 
 class Review(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, related_name='review_user', null=True, blank=True)

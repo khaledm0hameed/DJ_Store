@@ -1,13 +1,14 @@
 from django.contrib import admin
-from .models import Product, Category, SubCategory, Brand, Review, Flash, Ofer, Product_Images
+from .models import Product, Category, SubCategory, Brand, Review, Flash, Ofer, Product_Images,Product_Color
 
 # Inline admin class for Product_Images
 class ProductImagesTupolar(admin.TabularInline):
     model = Product_Images
-
+class ProductColorTupolar(admin.TabularInline):
+    model = Product_Color
 # Product admin with inline ProductImagesTupolar
 class ProductAdmin(admin.ModelAdmin):
-    inlines = [ProductImagesTupolar]
+    inlines = [ProductImagesTupolar,ProductColorTupolar]
     search_fields = ['Name']  # Add this line to enable search by product name
 
 # Register models with their respective admin classes
